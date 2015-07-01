@@ -7,7 +7,7 @@
 		var _self = this;
 		var wt = $(_self).width();
 		var def = {
-			imgHeight:"200",
+			imgHeight: "200",
 			data: null
 		}
 		def = $.extend(def, option);
@@ -17,7 +17,7 @@
 		function formatHTML(data) {
 			var str = "<ul>";
 			for (var i = 0, len = data && data.length; i < len; i++) {
-				str += "<li style='height:"+def.imgHeight+"px;'><a href=''><img src='" + data[i].filepath + "' alt=''/></a></li>";
+				str += "<li style='height:" + def.imgHeight + "px;'><a href=''><span>" + data[i].filename + "</span><img src='" + data[i].filepath + "' alt=''/></a></li>";
 			}
 			str += "</ul>";
 			return str;
