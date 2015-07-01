@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>横向瀑布流</title>
+	<style>
+	body{
+		margin: 0;
+		padding: 0;
+	}
+	.g-mn{
+		width: 1200px;
+		margin: 0 auto;
+	}
+	.g-mn:after{
+		content: "";
+		display: block;
+		clear: both;
+	}
+	.g-mn ul{
+		margin: 0;
+		padding: 0;
+		list-style: none;
+	}
+	.g-mn li{
+		float: left;
+		margin-right: 5px;
+		margin-bottom: 5px;
+		overflow: hidden;
+	}
+	.g-mn img{
+		border:none;
+		height: 100%;
+	}
+	</style>
+</head>
+<body>
+	<div class="g-mn" id="imgId">
+		
+	</div>
+	<script src="js/jquery.js"></script>
+	<script src="js/imgflow.js"></script>
+	<script>
+	$.ajax({
+		url:"./data/list.json",
+		type:"get",
+		dataType:"json",
+		success:function(data){
+			$("#imgId").imgflow({
+				data:data,
+				imgHeight:200
+			});
+		}
+	})
+	</script>
+</body>
+</html>
