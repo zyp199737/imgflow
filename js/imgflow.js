@@ -2,17 +2,16 @@
  * @author:zyp
  * @version:0.0.1
  */
-;(function($) {
+;
+(function($) {
 	$.fn.imgflow = function(option) {
 		var _self = this;
-		var wt = $(_self).width();
+		var timer;
 		var def = {
 			imgHeight: "200",
 			data: null
 		}
 		def = $.extend(def, option);
-		$(_self).html(formatHTML(def.data));
-		timer = setTimeout(calcImgElWidth.call(_self, wt), 0);
 
 		function formatHTML(data) {
 			var str = "<ul>";
@@ -23,8 +22,9 @@
 			return str;
 		}
 
-		function calcImgElWidth(wt) {
+		function calcImgElWidth() {
 			var imgLi = $(this).find("li");
+			var wt=$(this).width();
 			var rWt = 0,
 				rArr = [];
 			$.each(imgLi, function(i, n) {
@@ -36,7 +36,7 @@
 					var sumLen = wt - rWt + $(lastEl).outerWidth(true);
 					var d = (sumLen) / rArr.length;
 					$.each(rArr, function(j, m) {
-						var w2 = $(m).width() + d;
+						var w2 = $(m).width() + d-5;
 						var imgEl = $(m).find("img").eq(0);
 						if (w2 > imgEl.width()) {
 							imgEl.css({
@@ -52,5 +52,16 @@
 				}
 			});
 		}
+
+		$(window).bind("resize",function(){
+			if(timer){
+				window.clearTimeout(timer);
+				timer=null;
+			}
+			$(_self).html(formatHTML(def.data));
+			timer= setTimeout(calcImgElWidth.call(_self), 500);
+		});
+
+		$(window).trigger("resize");
 	}
 }(jQuery))
