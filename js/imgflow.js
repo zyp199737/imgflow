@@ -1,6 +1,6 @@
 /**
  * @author:zyp
- * @version:0.0.1
+ * @version:0.0.2
  */
 ;
 (function($) {
@@ -36,7 +36,8 @@
 					var sumLen = wt - rWt + $(lastEl).outerWidth(true);
 					var d = (sumLen) / rArr.length;
 					$.each(rArr, function(j, m) {
-						var w2 = $(m).width() + d-5;
+						var marginWt=Number($(m).css("margin-left").replace("px",""))+Number($(m).css("margin-right").replace("px",""));
+						var w2 = $(m).width() + d-marginWt;
 						var imgEl = $(m).find("img").eq(0);
 						if (w2 > imgEl.width()) {
 							imgEl.css({
