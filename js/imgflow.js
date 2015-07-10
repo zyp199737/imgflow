@@ -29,23 +29,31 @@
 				rArr = [];
 			$.each(imgLi, function(i, n) {
 				var w = $(n).outerWidth(true);
-				rWt += $(n).outerWidth(true);
+				rWt += w;
 				rArr.push(n);
 				if (rWt > wt) {
 					var lastEl = rArr.pop();
 					var sumLen = wt - rWt + $(lastEl).outerWidth(true);
-					var d = (sumLen) / rArr.length;
+					var d =Math.floor((sumLen) / rArr.length);
+					var total=0;
 					$.each(rArr, function(j, m) {
-						var marginWt=Number($(m).css("margin-left").replace("px",""))+Number($(m).css("margin-right").replace("px",""));
+						var marginWt=Number($(m).css("margin-left").replace("px",""))||0+Number($(m).css("margin-right").replace("px",""))||0;
 						var w2 = $(m).width() + d-marginWt;
 						var imgEl = $(m).find("img").eq(0);
+
+						total +=$(m).width() + d;
 						if (w2 > imgEl.width()) {
 							imgEl.css({
 								"width": w2 + "px",
 								"height": "auto"
 							});
 						}
-						$(m).width(Math.floor(w2));
+						$(m).width(w2);
+
+						if(j==rArr.length-1&&total!=wt){
+							$(m).width(w2+wt-total-2);
+							imgEl.width(w2+wt-total-2);
+						}
 					});
 					rWt = $(lastEl).outerWidth(true);
 					rArr.length = 0;
@@ -57,7 +65,6 @@
 		$(window).bind("resize",function(){
 			if(timer){
 				window.clearTimeout(timer);
-				timer=null;
 			}
 			$(_self).html(formatHTML(def.data));
 			timer= setTimeout(calcImgElWidth.call(_self), 500);
