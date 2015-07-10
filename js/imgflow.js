@@ -24,7 +24,7 @@
 
 		function calcImgElWidth() {
 			var imgLi = $(this).find("li");
-			var wt=$(this).width();
+			var wt = $(this).width();
 			var rWt = 0,
 				rArr = [];
 			$.each(imgLi, function(i, n) {
@@ -34,25 +34,26 @@
 				if (rWt > wt) {
 					var lastEl = rArr.pop();
 					var sumLen = wt - rWt + $(lastEl).outerWidth(true);
-					var d =Math.floor((sumLen) / rArr.length);
-					var total=0;
+					var d = Math.floor((sumLen) / rArr.length);
+					var total = 0;
 					$.each(rArr, function(j, m) {
-						var marginWt=Number($(m).css("margin-left").replace("px",""))||0+Number($(m).css("margin-right").replace("px",""))||0;
-						var w2 = $(m).width() + d-marginWt;
+						var marginWt = Number($(m).css("margin-left").replace("px", "")) || 0 + Number($(m).css("margin-right").replace("px", "")) || 0;
+						var w2 = $(m).width() + d - marginWt;
 						var imgEl = $(m).find("img").eq(0);
 
-						total +=$(m).width() + d;
-						if (w2 > imgEl.width()) {
-							imgEl.css({
-								"width": w2 + "px",
-								"height": "auto"
-							});
-						}
-						$(m).width(w2);
+						total += $(m).width() + d;
 
-						if(j==rArr.length-1&&total!=wt){
-							$(m).width(w2+wt-total-2);
-							imgEl.width(w2+wt-total-2);
+						if (j == rArr.length - 1 && total != wt) {
+							$(m).width(w2 + wt - total - 2);
+							imgEl.width(w2 + wt - total - 2);
+						} else {
+							if (w2 > imgEl.width()) {
+								imgEl.css({
+									"width": w2 + "px",
+									"height": "auto"
+								});
+							}
+							$(m).width(w2);
 						}
 					});
 					rWt = $(lastEl).outerWidth(true);
@@ -62,12 +63,12 @@
 			});
 		}
 
-		$(window).bind("resize",function(){
-			if(timer){
+		$(window).bind("resize", function() {
+			if (timer) {
 				window.clearTimeout(timer);
 			}
 			$(_self).html(formatHTML(def.data));
-			timer= setTimeout(calcImgElWidth.call(_self), 500);
+			timer = setTimeout(calcImgElWidth.call(_self), 500);
 		});
 
 		$(window).trigger("resize");
